@@ -1,0 +1,45 @@
+/* AgentProfilePage.css */
+.agent-profile-page { padding-top: 72px; }
+
+.agent-hero {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+  padding: 64px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.agent-hero-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.agent-hero-avatar {
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: var(--navy);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 42px; font-weight: 700;
+  overflow: hidden; flex-shrink: 0;
+  border: 4px solid rgba(201,168,76,0.3);
+}
+.agent-hero-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.agent-hero-info { flex: 1; }
+.agent-hero-info h1 { font-family: var(--font-serif); font-size: 40px; color: var(--white); margin-bottom: 8px; }
+.agent-agency { color: var(--gold); font-size: 16px; margin-bottom: 12px; }
+.agent-specs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.agent-contact { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.agent-stats-mini {
+  display: flex; flex-direction: column; gap: 16px;
+  background: rgba(255,255,255,0.06);
+  border-radius: var(--radius-md);
+  padding: 24px 32px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.asm-item { text-align: center; }
+.asm-val { display: block; font-family: var(--font-serif); font-size: 28px; color: var(--gold); font-weight: 600; }
+.asm-lbl { font-size: 12px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.5px; }
+
+.agent-bio-section { margin-bottom: 48px; padding: 32px; background: var(--white); border-radius: var(--radius-md); border: 1px solid var(--border-light); }
+.agent-bio-section h2 { font-family: var(--font-serif); font-size: 28px; margin-bottom: 16px; }
+.agent-bio-section p { font-size: 16px; line-height: 1.8; color: var(--text-secondary); }

@@ -1,0 +1,75 @@
+.enquiry-form {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  overflow: hidden;
+  position: sticky;
+  top: 90px;
+}
+
+.enquiry-header {
+  padding: 20px;
+  background: var(--cream);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.agent-card-mini { display: flex; gap: 14px; align-items: center; }
+.agent-avatar-lg {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: var(--navy);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 700;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 2px solid rgba(201,168,76,0.3);
+}
+.agent-avatar-lg img { width: 100%; height: 100%; object-fit: cover; }
+.agent-name-lg { font-weight: 600; font-size: 16px; }
+.agent-agency { font-size: 13px; color: var(--text-muted); margin: 2px 0; }
+.agent-phone { font-size: 13px; color: var(--gold-dark); font-weight: 500; }
+
+.enquiry-body { padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+.enquiry-body h4 { font-family: var(--font-serif); font-size: 20px; }
+
+/* Type buttons */
+.enquiry-types { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.type-btn {
+  padding: 10px 8px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: center;
+}
+.type-btn:hover { border-color: var(--gold); color: var(--gold-dark); }
+.type-btn.active { background: var(--navy); border-color: var(--navy); color: var(--gold); }
+
+.guest-fields { display: flex; flex-direction: column; gap: 12px; padding: 16px; background: var(--cream); border-radius: var(--radius-sm); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.logged-in-note { font-size: 13px; color: var(--text-muted); background: var(--cream); padding: 10px 14px; border-radius: var(--radius-sm); }
+
+.enquiry-disclaimer { font-size: 12px; color: var(--text-muted); text-align: center; }
+.enquiry-disclaimer a { color: var(--gold-dark); }
+
+/* Success */
+.enquiry-success {
+  padding: 48px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  background: var(--white);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+}
+.success-icon { font-size: 48px; }
+.enquiry-success h3 { font-family: var(--font-serif); font-size: 24px; }
+.enquiry-success p { color: var(--text-muted); font-size: 15px; line-height: 1.6; max-width: 300px; }
