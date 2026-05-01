@@ -5,6 +5,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const connectDB = require('./config/db');
+const { testEmailConfig } = require('./utils/emailService');
 
 // Route imports
 const authRoutes = require('./routes/authRoutes');
@@ -83,9 +84,21 @@ app.use((req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
   console.log(`📦 Environment: ${process.env.NODE_ENV || 'development'}`);
+  
+  // Test email configuration on startup
+  if (process.env.EMAIL_HOST && process.env.EMAIL_USER) {
+    const emailTest = await testEmailConfig();
+    if (emailTest.success) {
+      console.log('📧 Email service ready');
+    } else {
+      console.warn('⚠️  Email service not configured:', emailTest.error);
+    }
+  } else {
+    console.warn('⚠️  Email configuration missing');
+  }
 });
 
 module.exports = app;
