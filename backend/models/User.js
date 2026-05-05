@@ -101,6 +101,7 @@ const UserSchema = new mongoose.Schema(
       emailNewListings: { type: Boolean, default: false },
       emailMarketing: { type: Boolean, default: false },
     },
+
   },
   {
     timestamps: true,

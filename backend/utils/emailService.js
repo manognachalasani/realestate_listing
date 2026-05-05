@@ -375,6 +375,52 @@ const sendPasswordChangedConfirmation = async (user) => {
   }
 };
 
+// ── Send agent verification / unverification notification ────────────────────
+const sendAgentVerificationEmail = async (user, isVerified) => {
+  try {
+    if (!user?.email) return { success: false, error: 'User email not provided' };
+
+    const content = isVerified
+      ? `
+        <h2 style="color:#1a1a2e;">Congratulations — You're Verified! ✅</h2>
+        <p style="color:#666; line-height:1.7;">Your agent account on EstateHub has been officially verified. Your listings will now display a verified badge, helping you build trust with buyers.</p>
+        <div style="background:#f0f4ff; padding:20px; border-radius:8px; margin:24px 0;">
+          <h3 style="margin:0 0 8px; color:#1a1a2e;">What's unlocked:</h3>
+          <ul style="margin:0; padding-left:20px; color:#444; line-height:1.8;">
+            <li>Verified badge on all your listings</li>
+            <li>Increased visibility in search results</li>
+            <li>Access to premium analytics</li>
+          </ul>
+        </div>
+        <div style="text-align:center; margin-top:32px;">
+          <a href="${process.env.CLIENT_URL || '#'}/agent/dashboard" style="background:#d4af37; color:#1a1a2e; padding:14px 32px; border-radius:8px; text-decoration:none; font-weight:bold; display:inline-block;">Go to Dashboard →</a>
+        </div>
+      `
+      : `
+        <h2 style="color:#1a1a2e;">Agent Verification Update</h2>
+        <p style="color:#666; line-height:1.7;">We wanted to let you know that your verified status on EstateHub has been reviewed and temporarily removed.</p>
+        <p style="color:#666; line-height:1.7;">If you believe this is in error or have questions, please contact our support team.</p>
+        <div style="text-align:center; margin-top:32px;">
+          <a href="${process.env.CLIENT_URL || '#'}/contact" style="background:#d4af37; color:#1a1a2e; padding:14px 32px; border-radius:8px; text-decoration:none; font-weight:bold; display:inline-block;">Contact Support</a>
+        </div>
+      `;
+
+    const mailOptions = {
+      from: FROM,
+      to: user.email,
+      subject: isVerified
+        ? '🏆 Your EstateHub Agent Account is Now Verified!'
+        : 'EstateHub — Agent Verification Status Update',
+      html: wrapInTemplate(content, isVerified ? 'Agent Verified' : 'Verification Update'),
+    };
+
+    return await sendEmailSafely(mailOptions);
+  } catch (error) {
+    console.error('Error in sendAgentVerificationEmail:', error);
+    return { success: false, error: error.message };
+  }
+};
+
 // ── Test email configuration ──────────────────────────────────────────────────
 const testEmailConfig = async () => {
   try {
@@ -393,13 +439,14 @@ const testEmailConfig = async () => {
 };
 
 // ── Export all email functions ─────────────────────────────────────────────────
-module.exports = { 
-  sendEnquiryNotification, 
-  sendEnquiryConfirmation, 
+module.exports = {
+  sendEnquiryNotification,
+  sendEnquiryConfirmation,
   sendWelcomeEmail,
   sendPasswordResetEmail,
   sendEmailVerification,
   sendPasswordChangedConfirmation,
+  sendAgentVerificationEmail,
   testEmailConfig,
   getTransporter
 };

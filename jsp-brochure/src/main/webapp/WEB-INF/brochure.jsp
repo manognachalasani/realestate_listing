@@ -1,82 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ page import="com.google.gson.*" %>
+<%@ page import="com.realestate.model.PropertyData, java.time.LocalDate, java.time.Year" %>
 <%
-    // Parse JSON into accessible objects
-    String propertyJson = (String) request.getAttribute("propertyJson");
-    Gson gson = new Gson();
-    JsonObject p = gson.fromJson(propertyJson, JsonObject.class);
-
-    // Helper: safe string getter
-    java.util.function.Function<String, String> str = key -> {
-        if (p.has(key) && !p.get(key).isJsonNull()) return p.get(key).getAsString();
-        return "";
-    };
-    java.util.function.Function<String, Integer> num = key -> {
-        if (p.has(key) && !p.get(key).isJsonNull()) {
-            try { return p.get(key).getAsInt(); } catch (Exception e) { return 0; }
-        }
-        return 0;
-    };
-
-    JsonObject address = p.has("address") ? p.getAsJsonObject("address") : new JsonObject();
-    JsonObject agent = p.has("agent") && !p.get("agent").isJsonNull() ? p.getAsJsonObject("agent") : new JsonObject();
-    JsonArray photos = p.has("photos") ? p.getAsJsonArray("photos") : new JsonArray();
-    JsonArray amenities = p.has("amenities") ? p.getAsJsonArray("amenities") : new JsonArray();
-
-    String primaryPhotoUrl = "";
-    String photo2Url = "";
-    String photo3Url = "";
-    if (photos.size() > 0) {
-        primaryPhotoUrl = photos.get(0).getAsJsonObject().get("url").getAsString();
-    }
-    if (photos.size() > 1) photo2Url = photos.get(1).getAsJsonObject().get("url").getAsString();
-    if (photos.size() > 2) photo3Url = photos.get(2).getAsJsonObject().get("url").getAsString();
-
-    String price = "";
-    if (p.has("price")) {
-        long priceVal = p.get("price").getAsLong();
-        price = String.format("$%,d", priceVal);
-        if ("rent".equals(str.apply("listingType"))) price += "/month";
-    }
-
-    String fullAddress = "";
-    if (!address.entrySet().isEmpty()) {
-        fullAddress = (address.has("street") ? address.get("street").getAsString() : "") + ", " +
-                      (address.has("city") ? address.get("city").getAsString() : "") + ", " +
-                      (address.has("state") ? address.get("state").getAsString() : "") + " " +
-                      (address.has("zipCode") ? address.get("zipCode").getAsString() : "");
-    }
-
-    String agentName = "";
-    if (!agent.entrySet().isEmpty()) {
-        agentName = (agent.has("firstName") ? agent.get("firstName").getAsString() : "") + " " +
-                    (agent.has("lastName") ? agent.get("lastName").getAsString() : "");
-    }
-    String agentPhone = agent.has("phone") ? agent.get("phone").getAsString() : "";
-    String agentEmail = agent.has("email") ? agent.get("email").getAsString() : "";
-
-    pageContext.setAttribute("title", str.apply("title"));
-    pageContext.setAttribute("description", str.apply("description"));
-    pageContext.setAttribute("price", price);
-    pageContext.setAttribute("primaryPhotoUrl", primaryPhotoUrl);
-    pageContext.setAttribute("photo2Url", photo2Url);
-    pageContext.setAttribute("photo3Url", photo3Url);
-    pageContext.setAttribute("fullAddress", fullAddress);
-    pageContext.setAttribute("agentName", agentName);
-    pageContext.setAttribute("agentPhone", agentPhone);
-    pageContext.setAttribute("agentEmail", agentEmail);
-    pageContext.setAttribute("amenities", amenities);
-    pageContext.setAttribute("bedrooms", num.apply("bedrooms"));
-    pageContext.setAttribute("bathrooms", num.apply("bathrooms"));
-    pageContext.setAttribute("area", num.apply("area"));
-    pageContext.setAttribute("yearBuilt", num.apply("yearBuilt"));
-    pageContext.setAttribute("garages", num.apply("garages"));
-    pageContext.setAttribute("propertyType", str.apply("propertyType"));
-    pageContext.setAttribute("listingType", str.apply("listingType"));
-    pageContext.setAttribute("virtualTourUrl", str.apply("virtualTourUrl"));
-    pageContext.setAttribute("floorPlanUrl", str.apply("floorPlanUrl"));
+    PropertyData pd = (PropertyData) request.getAttribute("pd");
+    if (pd == null) { response.sendError(500, "Property data missing"); return; }
+    pageContext.setAttribute("title",          pd.title);
+    pageContext.setAttribute("description",    pd.description);
+    pageContext.setAttribute("price",          pd.formattedPrice);
+    pageContext.setAttribute("primaryPhotoUrl",pd.primaryPhotoUrl);
+    pageContext.setAttribute("photo2Url",      pd.photoUrls != null && pd.photoUrls.size() > 1 ? pd.photoUrls.get(1) : "");
+    pageContext.setAttribute("photo3Url",      pd.photoUrls != null && pd.photoUrls.size() > 2 ? pd.photoUrls.get(2) : "");
+    pageContext.setAttribute("fullAddress",    pd.fullAddress);
+    pageContext.setAttribute("agentName",      pd.agentName);
+    pageContext.setAttribute("agentPhone",     pd.agentPhone);
+    pageContext.setAttribute("agentEmail",     pd.agentEmail);
+    pageContext.setAttribute("amenities",      pd.amenities);
+    pageContext.setAttribute("bedrooms",       pd.bedrooms);
+    pageContext.setAttribute("bathrooms",      pd.bathrooms);
+    pageContext.setAttribute("area",           pd.area);
+    pageContext.setAttribute("yearBuilt",      pd.yearBuilt);
+    pageContext.setAttribute("garages",        pd.garages);
+    pageContext.setAttribute("propertyType",   pd.propertyType);
+    pageContext.setAttribute("listingType",    pd.listingType);
+    pageContext.setAttribute("virtualTourUrl", pd.virtualTourUrl);
+    pageContext.setAttribute("floorPlanUrl",   pd.floorPlanUrl);
+    pageContext.setAttribute("today",          LocalDate.now().toString());
+    pageContext.setAttribute("currentYear",    Year.now().getValue());
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -344,7 +294,7 @@
         <div class="brochure-address">📍 ${fullAddress}</div>
       </div>
       <div style="color:rgba(255,255,255,0.3);font-size:12px;margin-top:24px;">
-        Generated ${java.time.LocalDate.now().toString()} · EstateHub.com
+        Generated ${today} · EstateHub.com
       </div>
     </div>
   </div>
@@ -476,7 +426,7 @@
     <div class="brochure-footer">
       <div class="footer-logo">⌂ ESTATE<strong>HUB</strong></div>
       <div>This brochure is for informational purposes only. All details subject to verification.</div>
-      <div>© ${java.time.Year.now().getValue()} EstateHub</div>
+      <div>© ${currentYear} EstateHub</div>
     </div>
 
   </div>
