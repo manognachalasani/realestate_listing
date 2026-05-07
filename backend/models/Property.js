@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 
 const PhotoSchema = new mongoose.Schema({
   url: { type: String, required: true },
@@ -188,6 +189,17 @@ PropertySchema.pre('save', function (next) {
   // Auto-compute price per sqft
   if (this.area && this.price) {
     this.pricePerSqft = Math.round(this.price / this.area);
+  }
+
+  next();
+});
+
+PropertySchema.pre('save', function(next) {
+  if (!this.slug) {
+    this.slug = slugify(this.title, {
+      lower: true,
+      strict: true
+    });
   }
 
   next();

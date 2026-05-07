@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 const Property = require('../models/Property');
 const connectDB = require('../config/db');
+const slugify = require('slugify');
 
 const seed = async () => {
   await connectDB();
@@ -276,6 +277,13 @@ const seed = async () => {
       status: 'active',
     },
   ];
+
+  propertyData.forEach(property => {
+  property.slug = slugify(property.title, {
+    lower: true,
+    strict: true
+  });
+});
 
   const properties = await Property.insertMany(propertyData);
   console.log('Properties created');

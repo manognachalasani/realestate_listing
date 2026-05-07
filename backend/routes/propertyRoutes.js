@@ -27,7 +27,6 @@ router.get('/my-listings', protect, requireRole('agent', 'admin'), getMyListings
 router.post('/', protect, requireRole('agent', 'admin'), createProperty);
 
 // Routes with property ID parameter
-router.get('/:idOrSlug', optionalAuth, getProperty);
 router.put('/:id', protect, requireRole('agent', 'admin'), updateProperty);
 router.delete('/:id', protect, requireRole('agent', 'admin'), deleteProperty);
 
@@ -35,8 +34,7 @@ router.delete('/:id', protect, requireRole('agent', 'admin'), deleteProperty);
 router.post('/:id/photos', protect, requireRole('agent', 'admin'), uploadPhotos.array('photos', 20), addPhotos);
 router.delete('/:id/photos/:photoId', protect, requireRole('agent', 'admin'), deletePhoto);
 
-// Favorites
-router.get('/:id/enquiries', protect, requireRole('agent', 'admin'), getPropertyEnquiries);
+router.get('/:idOrSlug', optionalAuth, getProperty);
 
 // Additional helper route
 async function getPropertyEnquiries(req, res) {
