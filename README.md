@@ -85,7 +85,7 @@ net start MongoDB
 
 Install Homebrew:
 
-[Homebrew](https://brew.sh?utm_source=chatgpt.com)
+[Homebrew](https://brew.sh)
 
 Then install dependencies:
 
