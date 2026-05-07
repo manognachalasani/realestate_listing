@@ -30,7 +30,7 @@ real-estate-platform/
 
 ---
 
-# 📦 Prerequisites
+## Prerequisites
 
 Before running the project, install the following:
 
@@ -42,17 +42,18 @@ Before running the project, install the following:
 
 ---
 
-# 🖥️ Platform Notes
+## Platform Notes
 
-## Windows
+### Windows
 
-### Installations
+#### Installations
 - [Node.js](https://nodejs.org?utm_source=chatgpt.com)
 - [MongoDB Community Server](https://www.mongodb.com/try/download/community?utm_source=chatgpt.com)
 - [Java JDK](https://www.oracle.com/java/technologies/downloads/?utm_source=chatgpt.com)
 - [Apache Maven](https://maven.apache.org/download.cgi?utm_source=chatgpt.com)
 
-### Notes
+#### Notes
+
 Use:
 
 ```bash
@@ -78,9 +79,9 @@ net start MongoDB
 
 ---
 
-## macOS
+### macOS
 
-### Recommended Installation Method
+#### Recommended Installation Method
 
 Install Homebrew:
 
@@ -102,7 +103,7 @@ brew services start mongodb-community
 
 ---
 
-## Linux (Ubuntu/Debian)
+### Linux (Ubuntu/Debian)
 
 Install dependencies:
 
@@ -115,9 +116,9 @@ MongoDB may require adding the official MongoDB repository separately.
 
 ---
 
-# 🚀 Quick Start
+## Quick Start
 
-## Backend
+### Backend
 
 ```bash
 cd backend
@@ -126,7 +127,7 @@ cp .env.example .env
 npm run dev
 ```
 
-### Windows Users
+#### Windows Users
 
 ```bash
 cd backend
@@ -137,7 +138,7 @@ npm run dev
 
 ---
 
-## Frontend
+### Frontend
 
 ```bash
 cd frontend
@@ -147,7 +148,7 @@ npm start
 
 ---
 
-## JSP Brochure Server
+### JSP Brochure Server
 
 ```bash
 cd jsp-brochure
@@ -160,7 +161,7 @@ Visit:
 http://localhost:8080/brochure?propertyId=PROPERTY_ID
 ```
 
-### Alternative Maven Commands
+#### Alternative Maven Commands
 
 If `tomcat7:run` does not work:
 
@@ -178,7 +179,7 @@ depending on your Maven/Tomcat configuration.
 
 ---
 
-# 🔐 Environment Variables (backend/.env)
+## Environment Variables (backend/.env)
 
 ```env
 PORT=5000
@@ -199,16 +200,16 @@ CLIENT_URL=http://localhost:3000
 
 ---
 
-# 📡 API Endpoints
+## API Endpoints
 
-## Auth
+### Auth
 
 - `POST /api/auth/register` - Register agent/buyer
 - `POST /api/auth/login` - Login
 
 ---
 
-## Properties
+### Properties
 
 - `GET /api/properties` - Search & filter properties
 - `POST /api/properties` - Create listing (agent only)
@@ -219,7 +220,7 @@ CLIENT_URL=http://localhost:3000
 
 ---
 
-## Enquiries
+### Enquiries
 
 - `POST /api/enquiries` - Submit enquiry
 - `GET /api/enquiries/agent` - Agent's received enquiries
@@ -227,20 +228,20 @@ CLIENT_URL=http://localhost:3000
 
 ---
 
-## Upload
+### Upload
 
 - `POST /api/upload/photos` - Upload property photos
 - `POST /api/upload/floorplan` - Upload floor plan
 
 ---
 
-## JSP Brochure
+### JSP Brochure
 
 - `GET /brochure?propertyId=ID` - Print-ready HTML/PDF brochure
 
 ---
 
-# ✨ Features
+## Features
 
 - User authentication with JWT
 - Agent & buyer roles
@@ -254,7 +255,7 @@ CLIENT_URL=http://localhost:3000
 
 ---
 
-# 🛠️ Future Improvements
+## Future Improvements
 
 - Property wishlist/favorites
 - Payment integration
