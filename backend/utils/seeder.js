@@ -7,7 +7,7 @@ const connectDB = require('../config/db');
 
 const seed = async () => {
   await connectDB();
-  console.log('🌱 Seeding database...');
+  console.log('Seeding database...');
 
   // Clear existing data
   await User.deleteMany({});
@@ -283,25 +283,25 @@ const seed = async () => {
   // Ensure geospatial index exists
   try {
     await Property.collection.createIndex({ 'location.coordinates': '2dsphere' });
-    console.log('✅ Geospatial index ensured');
+    console.log('Geospatial index ensured');
   } catch (error) {
-    console.warn('⚠️  Geospatial index might already exist:', error.message);
+    console.warn('Geospatial index might already exist:', error.message);
   }
 
   console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-  console.log('✅ Database Seeded Successfully!');
+  console.log('Database Seeded Successfully!');
   console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-  console.log(`👤 ${agents.length + 1} users created`);
+  console.log(`${agents.length + 1} users created`);
   console.log(`   - 2 Agents: sarah@estatehub.com, james@estatehub.com`);
   console.log(`   - 1 Buyer: emma@example.com`);
-  console.log(`🏠 ${properties.length} properties created`);
-  console.log(`🔑 All passwords: password123`);
+  console.log(`${properties.length} properties created`);
+  console.log(`All passwords: password123`);
   console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
   
   process.exit(0);
 };
 
 seed().catch(err => {
-  console.error('❌ Seeding failed:', err);
+  console.error('Seeding failed:', err);
   process.exit(1);
 });

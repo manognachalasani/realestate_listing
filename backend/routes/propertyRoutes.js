@@ -1,18 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const {
-  getProperties, 
-  getNearbyProperties, 
+  getProperties,
+  getNearbyProperties,
   getProperty,
-  createProperty, 
-  updateProperty, 
+  createProperty,
+  updateProperty,
   deleteProperty,
-  addPhotos, 
-  deletePhoto, 
-  getMyListings,
-  getPropertyStats,
-  toggleFeatured,
-  getSimilarProperties
+  addPhotos,
+  deletePhoto,
+  getMyListings
 } = require('../controllers/propertyController');
 const { protect, optionalAuth, requireRole } = require('../middleware/auth');
 const { uploadPhotos } = require('../config/cloudinary');
@@ -20,9 +17,7 @@ const { uploadPhotos } = require('../config/cloudinary');
 // CRITICAL: Specific routes MUST come BEFORE parameterized routes
 
 // Public routes - No ID parameter
-router.get('/nearby', getNearbyProperties);  // Must be before /:idOrSlug
-router.get('/stats', getPropertyStats);       // Must be before /:idOrSlug
-router.get('/similar/:id', getSimilarProperties); // Must be before /:idOrSlug
+router.get('/nearby', getNearbyProperties);  // Must be before /:idOrSlugS
 
 // Main public route
 router.get('/', optionalAuth, getProperties);
@@ -41,7 +36,6 @@ router.post('/:id/photos', protect, requireRole('agent', 'admin'), uploadPhotos.
 router.delete('/:id/photos/:photoId', protect, requireRole('agent', 'admin'), deletePhoto);
 
 // Favorites
-router.post('/:id/favorite', protect, toggleFeatured);
 router.get('/:id/enquiries', protect, requireRole('agent', 'admin'), getPropertyEnquiries);
 
 // Additional helper route
