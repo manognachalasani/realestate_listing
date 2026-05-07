@@ -47,10 +47,10 @@ Before running the project, install the following:
 ### Windows
 
 #### Installations
-- [Node.js](https://nodejs.org?utm_source=chatgpt.com)
-- [MongoDB Community Server](https://www.mongodb.com/try/download/community?utm_source=chatgpt.com)
-- [Java JDK](https://www.oracle.com/java/technologies/downloads/?utm_source=chatgpt.com)
-- [Apache Maven](https://maven.apache.org/download.cgi?utm_source=chatgpt.com)
+- [Node.js](https://nodejs.org)
+- [MongoDB Community Server](https://www.mongodb.com/try/download/community)
+- [Java JDK](https://www.oracle.com/java/technologies/downloads)
+- [Apache Maven](https://maven.apache.org/download.cgi)
 
 #### Notes
 
