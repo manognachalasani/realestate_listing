@@ -5,9 +5,9 @@ import toast from 'react-hot-toast';
 import './EnquiryForm.css';
 
 const ENQUIRY_TYPES = [
-  { value: 'general', label: '💬 General Enquiry' },
+  { value: 'general', label: '🔎 General Enquiry' },
   { value: 'viewing', label: '🏠 Schedule Viewing' },
-  { value: 'offer', label: '💰 Make an Offer' },
+  { value: 'offer', label: '🤝 Make an Offer' },
   { value: 'information', label: '📋 Request Info' },
 ];
 
